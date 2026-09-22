@@ -52,7 +52,7 @@ class News(BaseModel):
     title:str
     content:str
 
-@app.get("/books{id}",response_model=News)
+@app.get("/news{id}",response_model=News)
 async def books(id:str):
     return {
         "id":f"该书的编号为{id}",
@@ -61,3 +61,11 @@ async def books(id:str):
 
     }
 
+#### 异常 ####
+from fastapi import FastAPI,HTTPException
+@app.get("/new/{id}")
+async  def get_news(id:int):
+    id_list=[1,2,3,4,5]
+    if id not in id_list:
+        raise HTTPException(status_code=404,detail="当前ID不存在")
+    return {"id":id}
