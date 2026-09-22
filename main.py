@@ -86,3 +86,14 @@ async def book1(request,call_next):
     response =await call_next(request)
     print("中间件1 end")
     return response
+
+
+###### 依赖注入 ######
+from fastapi import  Depends
+async  def common_parameters(skip:int =Query(0,gt=0),limit:int = Query(10,le=60)):
+    return {"skip":skip,"limit":limit}
+
+@app.get("/depend")
+async def denpend(commons = Depends(common_parameters)):
+    return commons
+
