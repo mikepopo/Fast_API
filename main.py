@@ -69,3 +69,20 @@ async  def get_news(id:int):
     if id not in id_list:
         raise HTTPException(status_code=404,detail="当前ID不存在")
     return {"id":id}
+
+
+##### 中间件 ####
+
+@app.middleware("http")
+async def book(request,call_next):
+    print("中间件2 start")
+    response =await call_next(request)
+    print("中间件2 end")
+    return response
+
+@app.middleware("http")
+async def book1(request,call_next):
+    print("中间件1 start")
+    response =await call_next(request)
+    print("中间件1 end")
+    return response
